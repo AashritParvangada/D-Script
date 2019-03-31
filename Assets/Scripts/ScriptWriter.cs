@@ -34,48 +34,53 @@ public class ScriptWriter : MonoBehaviour
 
     //Instantiates each letter group at the right place, then runs the move inst. point function.
     public void WriteScript()
-    { 
+    {
         //NEXT TASK: Check if the array index is contained in the Japanese Letters Array.
         //If it is, make the base letter in the Letter Formation script of the string the Japanese one instead.
         //You'll have to change the code in the letter formation script a bit to have a function. See next line.
         //The function iterates through the new Hiragana List in the Letter Container, then checks the letter dictionary--
         //Then assigns the base letter sprite as the Japanese Hiragana.
         //All the best future self.
-        
+
+        int iterationThroughS_Arr_Letters = 0;
         foreach (string s_LetterGroup in S_Arr_Letters)
         {
 
             if (s_LetterGroup != "")
             {
                 InstantiateAndPopulateLetterGroup(FindCharacterIndexInString(s_LetterGroup, c_underscore[0]), s_LetterGroup.Length
-                , G_LetterGroupPrefab, T_InstantiationPoint, s_LetterGroup);
+                , G_LetterGroupPrefab, T_InstantiationPoint, s_LetterGroup, isItHiragana(iterationThroughS_Arr_Letters));
                 MoveInstantiationPoint(F_HorizontalSkip, F_VerticalSkip);
             }
 
-            else if(s_LetterGroup=="")
+            else if (s_LetterGroup == "")
             {
                 Debug.Log("Empty Cell");
                 MoveInstantiationPoint(F_HorizontalSkip, F_VerticalSkip);
             }
-
+            iterationThroughS_Arr_Letters++;
         }
     }
 
     //Make letter group, set the base letter and diacritic, run Populating Functions within the letter group.
     public void InstantiateAndPopulateLetterGroup(int _indexOfFirstUnderscore, int _letterGroupLength
-    , GameObject _letterGroupPrefab, Transform _InstPointTransform, string _LetterGroup)
+    , GameObject _letterGroupPrefab, Transform _InstPointTransform, string _LetterGroup, bool isHiragana)
     {
         GameObject g_letterGroup = Instantiate(_letterGroupPrefab, _InstPointTransform);
         g_letterGroup.transform.SetParent(gameObject.transform);
         LetterFormation _LetterGroupScript = g_letterGroup.GetComponent<LetterFormation>();
 
+        if (!isHiragana)
+        {
+            _LetterGroupScript.S_BaseLetter = _LetterGroup.Substring(0, _indexOfFirstUnderscore + 1);
+            _LetterGroupScript.S_Diacritic = _LetterGroup.Substring(_indexOfFirstUnderscore, _letterGroupLength - _indexOfFirstUnderscore);
+        }
 
-        _LetterGroupScript.S_BaseLetter = _LetterGroup.Substring(0, _indexOfFirstUnderscore + 1);
-
-        _LetterGroupScript.S_Diacritic = _LetterGroup.Substring(_indexOfFirstUnderscore, _letterGroupLength - _indexOfFirstUnderscore);
-
-
-        _LetterGroupScript.AllPopulatingFunctions();
+        else
+        {
+            _LetterGroupScript.S_BaseLetter = _LetterGroup;
+        }
+        _LetterGroupScript.AllPopulatingFunctions(isHiragana);
     }
 
     //Find a character in a string.
@@ -115,4 +120,21 @@ public class ScriptWriter : MonoBehaviour
             SetInstantiationPoint(-F_MaxX, T_InstantiationPoint.position.y + _ySkip);
         }
     }
+
+    bool isItHiragana(int iterationInArray)
+    {
+        Debug.Log("Running Function");
+        foreach (int value in I_Arr_HiraganaSpots)
+        {
+            Debug.Log("Value:" + value +" Iteration:" + iterationInArray);
+            if (value == iterationInArray)
+            {
+                return true;
+                //Debug.Log("Returning True");
+            }
+        }
+
+        return false;
+    }
+
 }

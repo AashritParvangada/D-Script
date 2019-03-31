@@ -57,29 +57,48 @@ public class LetterFormation : MonoBehaviour
         Diacritic_Object = transform.GetChild(0).gameObject;
     }
 
-    void PopulateSprites()
+    void PopulateDevanagariSprites()
     {
-        if (LetterContainer.SToSpr_Dic_LettersToSprites.ContainsKey(S_BaseLetter))
-            SprRnd_BaseLetter.sprite = LetterContainer.SToSpr_Dic_LettersToSprites[S_BaseLetter];
+        if (LetterContainer.SToSpr_Dic_DevanagariLettersToSprites.ContainsKey(S_BaseLetter))
+            SprRnd_BaseLetter.sprite = LetterContainer.SToSpr_Dic_DevanagariLettersToSprites[S_BaseLetter];
         else
         {
             Debug.Log("Ain't nothing but a G thang.");
         }
 
-        if (LetterContainer.SToSpr_Dic_LettersToSprites.ContainsKey(S_Diacritic)) SprRnd_Diacritic.sprite = LetterContainer.SToSpr_Dic_LettersToSprites[S_Diacritic];
+        if (LetterContainer.SToSpr_Dic_DevanagariLettersToSprites.ContainsKey(S_Diacritic))
+            SprRnd_Diacritic.sprite = LetterContainer.SToSpr_Dic_DevanagariLettersToSprites[S_Diacritic];
         else
         {
             Debug.Log("Ain't nothing but a G thang.");
         }
     }
 
-    public void AllPopulatingFunctions()
+    void PopulateHiraganaSprites()
+    {
+        if (LetterContainer.SToSpr_Dic_HiraganaLettersToSprites.ContainsKey(S_BaseLetter))
+            SprRnd_BaseLetter.sprite = LetterContainer.SToSpr_Dic_HiraganaLettersToSprites[S_BaseLetter];
+
+        else
+        {
+            Debug.Log("Dochidemo nai, yakuza no koto dake");
+        }
+    }
+
+    public void AllPopulatingFunctions(bool isHiragana)
     {
         GetLetterContainer();
         GetChildObject();
         GetSpriteRenderers();
-        PopulateSprites();
-        OffsetDiacritic();
+
+        if (!isHiragana)
+        {
+            PopulateDevanagariSprites();
+            OffsetDiacritic();
+        }
+
+        else
+        { PopulateHiraganaSprites(); }
     }
     #endregion
 
