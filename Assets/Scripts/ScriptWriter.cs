@@ -70,16 +70,20 @@ public class ScriptWriter : MonoBehaviour
         g_letterGroup.transform.SetParent(gameObject.transform);
         LetterFormation _LetterGroupScript = g_letterGroup.GetComponent<LetterFormation>();
 
+        //If it's not Hiragana, set base letter and diacritic.
         if (!isHiragana)
         {
             _LetterGroupScript.S_BaseLetter = _LetterGroup.Substring(0, _indexOfFirstUnderscore + 1);
             _LetterGroupScript.S_Diacritic = _LetterGroup.Substring(_indexOfFirstUnderscore, _letterGroupLength - _indexOfFirstUnderscore);
         }
 
+        //Otherwise just set base letter.
         else
         {
             _LetterGroupScript.S_BaseLetter = _LetterGroup;
         }
+
+        //Populate the letter group based on whether it's hiragana or not.
         _LetterGroupScript.AllPopulatingFunctions(isHiragana);
     }
 
@@ -121,12 +125,11 @@ public class ScriptWriter : MonoBehaviour
         }
     }
 
+    //Insert an iteration of an array and compare it with the ints in I_Arr_Hiragana Spots, return true if match.
     bool isItHiragana(int iterationInArray)
     {
-        Debug.Log("Running Function");
         foreach (int value in I_Arr_HiraganaSpots)
         {
-            Debug.Log("Value:" + value +" Iteration:" + iterationInArray);
             if (value == iterationInArray)
             {
                 return true;

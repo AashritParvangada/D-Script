@@ -27,7 +27,7 @@ public class LetterContainer : MonoBehaviour
     // Use this for initialization
     public void LetterContinerInitialize()
     {
-        //Keep this as the first one. It makes the main list that populates the dictionary below.
+        //Keep this as the first one. It makes the main list that populates the dictionaries below.
         MakeMainLetterListsFromFolder();
         MakeFarRightAlignedListFromFolder();
         MakeRightAlignedListFromFolder();
@@ -35,6 +35,7 @@ public class LetterContainer : MonoBehaviour
         MakeDictionaries();
     }
 
+    //Add all the sprites in the resources folders to a list.
     void MakeMainLetterListsFromFolder()
     {
         foreach (Sprite spr_Letter in Resources.LoadAll<Sprite>("Resources_Letters/Devanagari"))
@@ -48,7 +49,7 @@ public class LetterContainer : MonoBehaviour
         }
     }
 
-
+    //Make dictionaries using the lists.
     void MakeDictionaries()
     {
         foreach (Sprite spr_letter in Spr_List_AllDevanagariLetterSprites)
@@ -61,6 +62,8 @@ public class LetterContainer : MonoBehaviour
             SToSpr_Dic_HiraganaLettersToSprites.Add(spr_Letter.name, spr_Letter);
         }
     }
+   
+   //Make alignment lists based on the folder that the letters are in.
     #region Alignment Lists
     void MakeFarRightAlignedListFromFolder()
     {
