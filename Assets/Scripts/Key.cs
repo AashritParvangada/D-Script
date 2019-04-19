@@ -29,7 +29,7 @@ public class Key : MonoBehaviour
     void TriggerKeyboardSingleKey(Key _key)
     {
 		Debug.Log("Gotcha");
-		KeyboardScript.SwitchOffOthers(_key);
+		KeyboardScript.KeyClicked(_key);
     }
 
 }
