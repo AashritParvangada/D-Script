@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
-
+    public bool isDiacritic = false;
 	private void Start() {
 		GetKeyboardScript();
 	}
