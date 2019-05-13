@@ -11,17 +11,15 @@ public class LetterContainer : MonoBehaviour
     public static Dictionary<string, Sprite> SToSpr_Dic_DevanagariLettersToSprites = new Dictionary<string, Sprite>();
     public static Dictionary<string, Sprite> SToSpr_Dic_HiraganaLettersToSprites = new Dictionary<string, Sprite>();
 
-    List<LetterFormation> Scr_List_LetterGroups = new List<LetterFormation>();
+    //The subsequent lists put those values into lists so that we can check alignment in LetterFormation.
     #region Diacritic Alignment Variables
     public static List<string> S_List_RightAligned = new List<string>();
     public static List<string> S_List_FarRightAligned = new List<string>();
     public static List<string> S_List_LeftAligned = new List<string>();
 
-    //These floats tell us how far the U, Uu, and R diacritics need to be offset on the X-Axis. See Offset Diacritic Function for more.
+    //These floats tell us how far the diacritics need to be offset on the X-Axis. See Offset Diacritic Function for more.
     public float f_RightAligned, f_FarRightAligned, f_LeftAligned;
     #endregion
-
-    //The subsequent lists put those values into lists so that we can check Contains later.
 
 
     // Use this for initialization
@@ -62,8 +60,8 @@ public class LetterContainer : MonoBehaviour
             SToSpr_Dic_HiraganaLettersToSprites.Add(spr_Letter.name, spr_Letter);
         }
     }
-   
-   //Make alignment lists based on the folder that the letters are in.
+
+    //Make alignment lists based on the folder that the letters are in.
     #region Alignment Lists
     void MakeFarRightAlignedListFromFolder()
     {
