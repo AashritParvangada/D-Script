@@ -574,8 +574,9 @@ GameObject:
   - component: {fileID: 183650558}
   - component: {fileID: 183650557}
   - component: {fileID: 183650559}
+  - component: {fileID: 183650560}
   m_Layer: 0
-  m_Name: E Diacritic Key
+  m_Name: _E_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -652,6 +653,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDiacritic: 1
+--- !u!61 &183650560
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 183650556}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.5, y: 2.5}
+    newSize: {x: 2.5, y: 2.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.5, y: 2.5}
+  m_EdgeRadius: 0
 --- !u!1 &256860127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1492,7 +1518,7 @@ GameObject:
   - component: {fileID: 665940630}
   - component: {fileID: 665940632}
   m_Layer: 0
-  m_Name: T_Key
+  m_Name: T
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3335,8 +3361,9 @@ GameObject:
   - component: {fileID: 1252867863}
   - component: {fileID: 1252867862}
   - component: {fileID: 1252867864}
+  - component: {fileID: 1252867865}
   m_Layer: 0
-  m_Name: S_Key
+  m_Name: S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3413,6 +3440,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDiacritic: 0
+--- !u!61 &1252867865
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1252867861}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.5, y: 2.5}
+    newSize: {x: 2.5, y: 2.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.5, y: 2.5}
+  m_EdgeRadius: 0
 --- !u!1 &1293138457
 GameObject:
   m_ObjectHideFlags: 0
@@ -4617,7 +4669,7 @@ Prefab:
     - target: {fileID: 114245730828901570, guid: 8f37ddf9b15ad6849bd45efac451e957,
         type: 2}
       propertyPath: S_Arr_Letters.Array.data[2]
-      value: T_A_
+      value: S_E_
       objectReference: {fileID: 0}
     - target: {fileID: 114245730828901570, guid: 8f37ddf9b15ad6849bd45efac451e957,
         type: 2}

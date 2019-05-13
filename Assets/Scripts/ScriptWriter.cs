@@ -35,13 +35,7 @@ public class ScriptWriter : MonoBehaviour
     //Instantiates each letter group at the right place, then runs the move inst. point function.
     public void WriteScript()
     {
-        //NEXT TASK: Check if the array index is contained in the Japanese Letters Array.
-        //If it is, make the base letter in the Letter Formation script of the string the Japanese one instead.
-        //You'll have to change the code in the letter formation script a bit to have a function. See next line.
-        //The function iterates through the new Hiragana List in the Letter Container, then checks the letter dictionary--
-        //Then assigns the base letter sprite as the Japanese Hiragana.
-        //All the best future self.
-
+        
         int iterationThroughS_Arr_Letters = 0;
         foreach (string s_LetterGroup in S_Arr_Letters)
         {
