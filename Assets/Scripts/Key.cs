@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
+    //Tells the game if this key is a diacritic so that we can do certain functions depending on whether it is or isn't.
     public bool isDiacritic = false;
-	private void Start() {
-		GetKeyboardScript();
-	}
+
+    //Getting the Keyboard script, which will check if the input is the right letter in the end.
+    private void Start()
+    {
+        GetKeyboardScript();
+    }
+
+    //Var of Keyboard Script.
     Keyboard KeyboardScript;
+
+    //When this key is tapped-
     private void OnMouseDown()
     {
-        Color dimmed = new Color(50, 50, 50);
-        GetComponent<SpriteRenderer>().color = dimmed;
-
-        TriggerKeyboardSingleKey(this);
+        KeyClicked(this);
     }
 
     void GetKeyboardScript()
     {
+        //Pretty complicated way to check if parent of parent is keyboard. Might change to a Find later.
         if (transform.parent.transform.parent.GetComponent<Keyboard>())
         {
             KeyboardScript = transform.parent.transform.parent.GetComponent<Keyboard>();
@@ -26,10 +32,18 @@ public class Key : MonoBehaviour
 
     }
 
-    void TriggerKeyboardSingleKey(Key _key)
+    //This is currently triggered when the key is clicked. It calls a function from the Keyboard script that centers the key, enlarges it, and removes all other keys. It also pops up the diacritic keys.
+    void KeyClicked(Key _key)
     {
-		Debug.Log("Gotcha");
-		KeyboardScript.KeyClicked(_key);
+        if (!isDiacritic)
+        {
+            KeyboardScript.NormalKeyClicked(_key);
+        }
+
+        else
+        {
+            KeyboardScript.DiacriticKeyClicked(this);
+        }
     }
 
 }

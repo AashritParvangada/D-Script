@@ -88,6 +88,8 @@ public class LetterFormation : MonoBehaviour
         //If is hiragana, populate as hiragana.
         else
         { PopulateHiraganaSprites(); }
+
+        AddTriggerBox();
     }
     #endregion
 
@@ -117,4 +119,14 @@ public class LetterFormation : MonoBehaviour
         }
     }
     #endregion
+
+    void AddTriggerBox()
+    {
+        BoxCollider2D _triggerBox = gameObject.AddComponent<BoxCollider2D>();
+        _triggerBox.size = new Vector2(2, 3);
+    }
+    private void OnMouseDown()
+    {
+        Debug.Log(S_BaseLetter + S_Diacritic);
+    }
 }
