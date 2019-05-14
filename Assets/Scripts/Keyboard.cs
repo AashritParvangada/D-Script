@@ -16,12 +16,19 @@ public class Keyboard : MonoBehaviour
 
     string s_Letter; //This is the string that we'll used to check whether the input is correct or not. If the input is wrong, we'll reset the keyboard in a function.
 
+    private void OnEnable() {
+        EventManager.OnHiraganaClicked+=SwitchOnRegulars;
+    }
+    private void OnDisable() {
+        EventManager.OnHiraganaClicked-=SwitchOnRegulars;
+    }
+
 
     // Use this for initialization
     void Start()
     {
         GetAllKeys();
-		SwitchOnOffDiacritics(b_NormalKeyClicked);
+        SwitchOffKeyboard();
     }
 
     void GetAllKeys()
@@ -30,7 +37,7 @@ public class Keyboard : MonoBehaviour
         {
             if (_key.isDiacritic)
             {
-				key_List_DiacriticKeys.Add(_key);
+                key_List_DiacriticKeys.Add(_key);
             }
             else
             {
@@ -41,13 +48,13 @@ public class Keyboard : MonoBehaviour
     }
 
     //Can turn off or on Diacritic Keys. Used in both normal key clicked and diacritic key clicked.
-	void SwitchOnOffDiacritics(bool _keyActive)
-	{
-		foreach(Key _key in key_List_DiacriticKeys)
-		{
-			_key.gameObject.SetActive(_keyActive);
-		}
-	}
+    void SwitchOnOffDiacritics(bool _keyActive)
+    {
+        foreach (Key _key in key_List_DiacriticKeys)
+        {
+            _key.gameObject.SetActive(_keyActive);
+        }
+    }
 
     //If a normal key is clicked, turn off other normal keys, pull the key to the center of the screen, and surround it with diacritic keys.
     public void NormalKeyClicked(Key _keyClicked)
@@ -59,13 +66,13 @@ public class Keyboard : MonoBehaviour
             b_NormalKeyClicked = true;
         }
         AddToLetter(_keyClicked, b_DiacriticKeyClicked);
-		SwitchOnOffDiacritics(b_NormalKeyClicked);
+        SwitchOnOffDiacritics(b_NormalKeyClicked);
     }
 
     //Still WIP. Add to letter, but nothing else currently happens.
     public void DiacriticKeyClicked(Key _diacriticClicked)
     {
-        b_DiacriticKeyClicked=true;
+        b_DiacriticKeyClicked = true;
         AddToLetter(_diacriticClicked, b_DiacriticKeyClicked);
     }
 
@@ -76,8 +83,28 @@ public class Keyboard : MonoBehaviour
         {
             if (_key != _keyToKeepOn)
             {
-                _key.GetComponent<SpriteRenderer>().enabled = false;
+                _key.gameObject.SetActive(false);
             }
+        }
+    }
+
+    void SwitchOffKeyboard()
+    {
+        foreach (Key _key in key_List_RegularKeys)
+        {
+            _key.gameObject.SetActive(false);
+        }
+        foreach (Key _key in key_List_DiacriticKeys)
+        {
+            _key.gameObject.SetActive(false);
+        }
+    }
+
+        public void SwitchOnRegulars()
+    {
+        foreach (Key _key in key_List_RegularKeys)
+        {
+            _key.gameObject.SetActive(true);
         }
     }
 
@@ -92,16 +119,16 @@ public class Keyboard : MonoBehaviour
     //This is still a WIP. It still needs to be tied in to the actual key that has been clicked.
     void AddToLetter(Key _key, bool _isDiacritic)
     {
-        if(!_isDiacritic)
+        if (!_isDiacritic)
         {
-            s_Letter=_key.gameObject.name;
+            s_Letter = _key.gameObject.name;
         }
 
         else
         {
-            s_Letter+=_key.gameObject.name;
+            s_Letter += _key.gameObject.name;
         }
-        
+
         Debug.Log(s_Letter);
     }
 

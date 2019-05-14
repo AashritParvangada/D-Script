@@ -25,6 +25,8 @@ public class LetterFormation : MonoBehaviour
 
     #region Letter Populating Functions
 
+
+
     void GetLetterContainer()
     {
         LetCon_LetterContainer = GameObject.FindObjectOfType<LetterContainer>();
@@ -73,14 +75,14 @@ public class LetterFormation : MonoBehaviour
     }
 
     //Find script, find the diacritic object, get their sprite renderers.
-    public void AllPopulatingFunctions(bool isHiragana)
+    public void AllPopulatingFunctions(bool _isHiragana)
     {
         GetLetterContainer();
         GetChildObject();
         GetSpriteRenderers();
 
         //Currently called from Script Writer. Adds a diacritic offset if the letter is devanagari.
-        if (!isHiragana)
+        if (!_isHiragana)
         {
             PopulateDevanagariSprites();
             OffsetDiacritic();
@@ -89,7 +91,10 @@ public class LetterFormation : MonoBehaviour
         else
         { PopulateHiraganaSprites(); }
 
+        //These are used for answering Hiragana.
+        B_IsHiragana = _isHiragana;
         AddTriggerBox();
+        FindKeyboard();
     }
     #endregion
 
@@ -120,13 +125,33 @@ public class LetterFormation : MonoBehaviour
     }
     #endregion
 
+
+    //All of these are called in AllPopulatingFunctions but are sectioned off here.
+    #region Click to Answer
+
+    Keyboard keyb_Keyboard;
+    public bool B_IsHiragana;
+
+    //Look for the keyboard.
+    void FindKeyboard()
+    {
+        keyb_Keyboard = GameObject.FindObjectOfType<Keyboard>();
+    }
+
+        //Adds a trigger box to each of the letters in the game.
     void AddTriggerBox()
     {
-        BoxCollider2D _triggerBox = gameObject.AddComponent<BoxCollider2D>();
-        _triggerBox.size = new Vector2(2, 3);
+        if (B_IsHiragana)
+        {
+            BoxCollider2D _triggerBox = gameObject.AddComponent<BoxCollider2D>();
+            _triggerBox.size = new Vector2(2, 3);
+        }
     }
+
+    //Keyboard comes up when I click a key.
     private void OnMouseDown()
     {
-        Debug.Log(S_BaseLetter + S_Diacritic);
+        keyb_Keyboard.SwitchOnRegulars();
     }
+    #endregion
 }
