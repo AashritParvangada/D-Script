@@ -14,14 +14,9 @@ public class Keyboard : MonoBehaviour
     List<Key> key_List_RegularKeys = new List<Key>(); //This is a list of all the keys in the keyboard that are regular. Used for on/off right now.
     List<Key> key_List_DiacriticKeys = new List<Key>(); //A list of all the keys in they keyboard that are diacritic. Used for on/off right now.
 
-    string s_Letter; //This is the string that we'll used to check whether the input is correct or not. If the input is wrong, we'll reset the keyboard in a function.
+    string s_correctKey; //Pass a variable in here when activating the keyboard, clear it when closing the keyboard.
 
-    private void OnEnable() {
-        EventManager.OnHiraganaClicked+=SwitchOnRegulars;
-    }
-    private void OnDisable() {
-        EventManager.OnHiraganaClicked-=SwitchOnRegulars;
-    }
+    string s_inputLetter; //This is the string that we'll used to check whether the input is correct or not. If the input is wrong, we'll reset the keyboard in a function.
 
 
     // Use this for initialization
@@ -44,7 +39,6 @@ public class Keyboard : MonoBehaviour
                 key_List_RegularKeys.Add(_key);
             }
         }
-
     }
 
     //Can turn off or on Diacritic Keys. Used in both normal key clicked and diacritic key clicked.
@@ -100,12 +94,18 @@ public class Keyboard : MonoBehaviour
         }
     }
 
-        public void SwitchOnRegulars()
+    public void SwitchOnRegulars()
     {
         foreach (Key _key in key_List_RegularKeys)
         {
             _key.gameObject.SetActive(true);
         }
+    }
+
+    //Store value of correct key.
+    public void PassInCorrectKey(string _correctKey)
+    {
+        s_correctKey = _correctKey;
     }
 
     //Bring the key to the center based on serialised variables.
@@ -121,15 +121,32 @@ public class Keyboard : MonoBehaviour
     {
         if (!_isDiacritic)
         {
-            s_Letter = _key.gameObject.name;
+            s_inputLetter = _key.gameObject.name;
         }
 
         else
         {
-            s_Letter += _key.gameObject.name;
+            s_inputLetter += _key.gameObject.name;
+            CheckIfIsCorrectInput();
         }
 
-        Debug.Log(s_Letter);
+        Debug.Log(s_inputLetter);
     }
+
+    void CheckIfIsCorrectInput()
+    {
+        if(s_inputLetter==s_correctKey)
+        {
+            Debug.Log("That was the correct input!");
+        }
+
+        else
+        {
+            {
+                Debug.Log("Wrong input!"+ s_correctKey + "!="+ s_inputLetter);
+            }
+        }
+    }
+
 
 }

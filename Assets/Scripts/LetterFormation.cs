@@ -151,7 +151,9 @@ public class LetterFormation : MonoBehaviour
     //Keyboard comes up when I click a key.
     private void OnMouseDown()
     {
+        //Turn on the keyboard and send in what the correct value should be.
         keyb_Keyboard.SwitchOnRegulars();
+        keyb_Keyboard.PassInCorrectKey(S_BaseLetter);
     }
     #endregion
 }
