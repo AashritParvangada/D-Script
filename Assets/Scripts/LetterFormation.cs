@@ -153,7 +153,7 @@ public class LetterFormation : MonoBehaviour
     {
         //Turn on the keyboard and send in what the correct value should be.
         keyb_Keyboard.SwitchOnRegulars();
-        keyb_Keyboard.PassInCorrectKey(S_BaseLetter);
+        keyb_Keyboard.PassInCorrectKey(this);
     }
     #endregion
 }

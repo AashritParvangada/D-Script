@@ -14,18 +14,23 @@ public class Keyboard : MonoBehaviour
     List<Key> key_List_RegularKeys = new List<Key>(); //This is a list of all the keys in the keyboard that are regular. Used for on/off right now.
     List<Key> key_List_DiacriticKeys = new List<Key>(); //A list of all the keys in they keyboard that are diacritic. Used for on/off right now.
 
-    string s_correctKey; //Pass a variable in here when activating the keyboard, clear it when closing the keyboard.
-
+    LetterFormation LetFor_correctKey; //Pass a variable in here when activating the keyboard, clear it when closing the keyboard.
+    ScriptWriter ScrWri_Level; //This will be used to instantiate the correct letter at the Hiragana location.
     string s_inputLetter; //This is the string that we'll used to check whether the input is correct or not. If the input is wrong, we'll reset the keyboard in a function.
 
 
     // Use this for initialization
     void Start()
     {
+        GetAllVariables();
         GetAllKeys();
         SwitchOffKeyboard();
     }
 
+    void GetAllVariables()
+    {
+        ScrWri_Level = GameObject.FindObjectOfType<ScriptWriter>();
+    }
     void GetAllKeys()
     {
         foreach (Key _key in GetComponentsInChildren<Key>())
@@ -103,9 +108,9 @@ public class Keyboard : MonoBehaviour
     }
 
     //Store value of correct key.
-    public void PassInCorrectKey(string _correctKey)
+    public void PassInCorrectKey(LetterFormation _correctKey)
     {
-        s_correctKey = _correctKey;
+        LetFor_correctKey = _correctKey;
     }
 
     //Bring the key to the center based on serialised variables.
@@ -133,17 +138,19 @@ public class Keyboard : MonoBehaviour
         Debug.Log(s_inputLetter);
     }
 
+    //Checks if the combined string of normal + diacritic inputs matches what the Bsae Letter of Hiragana is. If so, Instantiates a devanagari there.
     void CheckIfIsCorrectInput()
     {
-        if(s_inputLetter==s_correctKey)
+        if (s_inputLetter == LetFor_correctKey.S_BaseLetter)
         {
             Debug.Log("That was the correct input!");
+            ScrWri_Level.InstantiateSingleDevanagari(LetFor_correctKey);
         }
 
         else
         {
             {
-                Debug.Log("Wrong input!"+ s_correctKey + "!="+ s_inputLetter);
+                Debug.Log("Wrong input!" + LetFor_correctKey.S_BaseLetter + "!=" + s_inputLetter);
             }
         }
     }

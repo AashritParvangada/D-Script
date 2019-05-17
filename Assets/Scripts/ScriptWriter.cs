@@ -35,7 +35,7 @@ public class ScriptWriter : MonoBehaviour
     //Instantiates each letter group at the right place, then runs the move inst. point function.
     public void WriteScript()
     {
-        
+
         int iterationThroughS_Arr_Letters = 0;
         foreach (string s_LetterGroup in S_Arr_Letters)
         {
@@ -132,6 +132,16 @@ public class ScriptWriter : MonoBehaviour
         }
 
         return false;
+    }
+
+
+    //Instantiates a single devanagari. Used from Keyboard to overlay on top of a hiragana value.
+    public void InstantiateSingleDevanagari(LetterFormation _HiraganaInQuestion) //Used by the Keyboard script to input the correct letters.
+    {
+        SetInstantiationPoint(_HiraganaInQuestion.transform.position.x, _HiraganaInQuestion.transform.position.y);
+        InstantiateAndPopulateLetterGroup(FindCharacterIndexInString(_HiraganaInQuestion.S_BaseLetter, c_underscore[0]), _HiraganaInQuestion.S_BaseLetter.Length
+        , G_LetterGroupPrefab, T_InstantiationPoint.transform, _HiraganaInQuestion.S_BaseLetter, false);
+
     }
 
 }
