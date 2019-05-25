@@ -57,7 +57,7 @@ public class Keyboard : MonoBehaviour
     }
 
     //If a normal key is clicked, turn off other normal keys, pull the key to the center of the screen, and surround it with diacritic keys.
-    public void NormalKeyClicked(Key _keyClicked)
+    public void NormalKeyClicked(Key _keyClicked) ///Somewhere here need to add a check for if the normal key is the correct one.
     {
         if (!b_NormalKeyClicked)
         {
@@ -65,9 +65,13 @@ public class Keyboard : MonoBehaviour
             SwitchOffOthers(_keyClicked);
             CenterKey(_keyClicked);
             b_NormalKeyClicked = true;
+
+            //Moved these two inside the bracket. Move back out if problems arise.
+            AddToLetter(_keyClicked, b_DiacriticKeyClicked);
+            SwitchOnOffDiacritics(b_NormalKeyClicked);
+
+            CheckIfBaseIsCorrectInput();
         }
-        AddToLetter(_keyClicked, b_DiacriticKeyClicked);
-        SwitchOnOffDiacritics(b_NormalKeyClicked);
     }
 
     //Still WIP. Add to letter, but nothing else currently happens.
@@ -103,10 +107,14 @@ public class Keyboard : MonoBehaviour
 
     public void SwitchOnRegulars()
     {
-        foreach (Key _key in key_List_RegularKeys)
+        if (!b_NormalKeyClicked)
         {
-            _key.gameObject.SetActive(true);
+            foreach (Key _key in key_List_RegularKeys)
+            {
+                _key.gameObject.SetActive(true);
+            }
         }
+
     }
 
     //Store value of correct key.
@@ -136,14 +144,14 @@ public class Keyboard : MonoBehaviour
         else
         {
             s_inputLetter += _key.gameObject.name;
-            CheckIfIsCorrectInput();
+            CheckIfBaseAndDiacriticIsCorrectInput();
         }
 
         Debug.Log(s_inputLetter);
     }
 
     //Checks if the combined string of normal + diacritic inputs matches what the Bsae Letter of Hiragana is. If so, Instantiates a devanagari there.
-    void CheckIfIsCorrectInput()
+    void CheckIfBaseAndDiacriticIsCorrectInput()
     {
         if (s_inputLetter == LetFor_correctKey.S_BaseLetter)
         {
@@ -157,24 +165,34 @@ public class Keyboard : MonoBehaviour
         {
             {
                 ReturnKey();
-                b_NormalKeyClicked=false;
-                b_DiacriticKeyClicked=false;
+                b_NormalKeyClicked = false;
+                b_DiacriticKeyClicked = false;
                 SwitchOnOffDiacritics(b_NormalKeyClicked);
                 SwitchOnRegulars();
-                s_inputLetter=null;
+                s_inputLetter = null;
                 Debug.Log("Wrong input!" + LetFor_correctKey.S_BaseLetter + "!=" + s_inputLetter);
             }
+        }
+    }
+
+    //Checks if the diacritic by itself is teh correct input.
+    void CheckIfBaseIsCorrectInput()
+    {
+        if (s_inputLetter + "_A_" == LetFor_correctKey.S_BaseLetter)
+        {
+            ScrWri_Level.InstantiateSingleDevanagari(LetFor_correctKey);
+            ResetAndSwitchOffKeyboard();
         }
     }
 
     void ResetAndSwitchOffKeyboard() //This is called when players get a key correctly. The Keyboard disappears.
     {
         ReturnKey();
-        b_NormalKeyClicked=false;
-        b_DiacriticKeyClicked=false;
+        b_NormalKeyClicked = false;
+        b_DiacriticKeyClicked = false;
         SwitchOnOffDiacritics(false);
         SwitchOffKeyboard();
-        s_inputLetter=null;
+        s_inputLetter = null;
 
     }
 
@@ -187,7 +205,7 @@ public class Keyboard : MonoBehaviour
 
     void SwitchOffTriggerOnKey() //Currently makes sure we can't click the Hiragana again. Later can put a funciton in the hiragana that affects animation.
     {
-        LetFor_correctKey.GetComponent<BoxCollider2D>().enabled=false;
+        LetFor_correctKey.GetComponent<BoxCollider2D>().enabled = false;
     }
 
 }
